@@ -1,0 +1,5 @@
+hellowindow
+hellowindow.exe
+.clangd
+.cache
+build/*
