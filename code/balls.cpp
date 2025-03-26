@@ -84,21 +84,17 @@ int main(void) {
     /*    5, 4, 1*/
     /*};*/
     sjd::Icosahedron myShape {};
-    const std::vector<float>& vertices {myShape.getVertices()};
-    const std::vector<uint32_t>& indices {myShape.getIndices()};
+    const std::vector<float>& vertices {myShape.getPrimVertices()};
     // ---
 
     // INITILISE BUFFERS AND ATTRIBUTE ARRAYS
     GLuint VBO;
     glGenBuffers(1, &VBO);
-    GLuint EBO;
-    glGenBuffers(1, &EBO);
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glVertexAttribPointer(0,
                           3,
                           GL_FLOAT,
@@ -111,11 +107,6 @@ int main(void) {
     glBufferData(GL_ARRAY_BUFFER,
                  vertices.size() * sizeof(float),
                  vertices.data(),
-                 GL_STATIC_DRAW
-    );
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 indices.size() * sizeof(float),
-                 indices.data(),
                  GL_STATIC_DRAW
     );
     // ---
@@ -144,7 +135,7 @@ int main(void) {
             myShader.setMat4("model", model);
 
             glBindVertexArray(VAO);
-            glDrawElements(GL_TRIANGLES, GLsizei(indices.size()), GL_UNSIGNED_INT, 0);
+            glDrawArrays(GL_TRIANGLES, 0, GLsizei(vertices.size()));
 
             glm::mat4 view;
             view = globals::myCamera.getViewMatrix();

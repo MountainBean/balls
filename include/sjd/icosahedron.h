@@ -86,6 +86,18 @@ public:
         return indref;
     }
 
+    const std::vector<float> getPrimVertices() const {
+        const std::vector<uint32_t>& indices {getIndices()};
+        const std::vector<float>& vertices {getVertices()};
+        std::vector<float> primVertices {};
+        for (uint32_t index : indices) {
+            primVertices.push_back(vertices[3*index]);
+            primVertices.push_back(vertices[3*index+1]);
+            primVertices.push_back(vertices[3*index+2]);
+        }
+        return primVertices;
+    }
+
 private:
     float m_radius;
     std::vector<float> m_vertices;
